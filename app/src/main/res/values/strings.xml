@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Notepad</string>
+    <string name="this_is_my_first_note">This is my First Note</string>
+    <string name="title_here">Title Here</string>
+    <string name="search">Search</string>
+    <string name="help">Help</string>
+    <string name="addNote">AddNote</string>
+    <string name="navigation_drawer">navigation_drawer</string>
+    <string name="fab_content_desc">fab_content_desc</string>
+    <string name="enter_text_here">Enter Text Here</string>
+    <string name="save">Save</string>
+    <string name="add_note">Add Note</string>
+</resources>
