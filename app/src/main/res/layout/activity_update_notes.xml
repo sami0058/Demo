@@ -6,12 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/brown"
-    tools:context=".addNoteActivity">
-
-
-
-
-
+    tools:context=".UpdateNotes">
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -28,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:titleTextColor="@color/black"
-            app:title="@string/add_note"
+            app:title="Update Note"
             app:titleMarginStart="70dp"
             app:menu="@menu/add_note_app_bar"
             />

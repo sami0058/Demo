@@ -2,19 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
-    android:title="@string/search"
-    app:showAsAction="ifRoom|collapseActionView"
-    app:actionViewClass="android.widget.SearchView"
-    android:icon="@drawable/baseline_search_24"
-    android:id="@+id/search"
-    />
-    <item
         android:title="@string/help"
-        app:showAsAction="ifRoom|collapseActionView"
-
+        app:showAsAction="ifRoom"
         android:icon="@drawable/baseline_help_24"
         android:id="@+id/help"
         />
+   <group>
+       <item
+           android:id="@+id/btnNoteShare"
+           android:title="@string/share"
+           app:showAsAction="never"
+           android:contentDescription="@string/note_share"
+           android:icon="@drawable/baseline_share_24"
+           />
+   </group>
+
 
 
 </menu>

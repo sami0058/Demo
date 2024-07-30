@@ -25,7 +25,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.List;
 
-public class addNoteActivity extends AppCompatActivity {
+public class UpdateNotes extends AppCompatActivity {
     MaterialToolbar addNoteAppBar;
     AppCompatImageButton btnReturn;
     EditText etTitle,etContent;
@@ -34,50 +34,67 @@ public class addNoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_note);
+        setContentView(R.layout.activity_update_notes);
         addNoteAppBar = findViewById(R.id.topAppBarNote);
         btnReturn = findViewById(R.id.btnReturn);
         etTitle = findViewById(R.id.etTitle);
         etContent = findViewById(R.id.etContent);
-        Notes notes = new Notes();
+
         DB db = DB.getInstance(this);
+        List<Notes> notesList = db.fetchNotes();
+
+        Intent updateIntent = getIntent();
+        int position = updateIntent.getIntExtra("position",-1);
+        updateIntent.getStringExtra("title");
+        updateIntent.getStringExtra("content");
+
+        etTitle.setText(updateIntent.getStringExtra("title"));
+        etContent.setText(updateIntent.getStringExtra("content"));
+//        Notes notes = new Notes();
+//        notes.setNoteId(Integer.parseInt(updateIntent.getStringExtra("noteId")));
+
 
         addNoteAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.btnUpdate){
-                  try {
-                      String title = String.valueOf(etTitle.getText());
-                      String content = String.valueOf(etContent.getText());
-                      Notes note1 = new Notes(title,content);
-                      if (db.insertNote(note1)){
-                          Toast.makeText(addNoteActivity.this, "Note Saved", Toast.LENGTH_SHORT).show();
-                          finish();
-                      }
+                    try {
+                        int id = notesList.get(position).getNoteId();
+                        String title = etTitle.getText().toString();
+                        String content = etContent.getText().toString();
 
-                  } catch (Exception ex){
-                      ex.getMessage();
-                  }
+                        Notes note2 = new Notes(id,title,content);
+//                        note1.setNoteId(notes.getNoteId());
+//                        db.updateNote(note1);
+
+                        if (db.updateNote(note2)){
+                            Toast.makeText(UpdateNotes.this, "Note Update", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(UpdateNotes.this, "Note Not Updated", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (Exception ex){
+                        ex.getMessage();
+                    }
                 }
                 if (item.getItemId() == R.id.btnDelete){
-                    if (db.deleteNote(notes)){
-                        Toast.makeText(addNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
+                    if (db.deleteNote(notesList.get(position))){
+                        Toast.makeText(UpdateNotes.this, "Note Deleted", Toast.LENGTH_SHORT).show();
                     }
-
-
                     finish();
                     return true;
                 }
 
-
                 if (item.getItemId() == R.id.btnNoteInfo){
+                    Toast.makeText(UpdateNotes.this, "Note Info", Toast.LENGTH_SHORT).show();
                     finish();
                     return true;
                 }
                 if (item.getItemId() == R.id.btnShare){
-                    Toast.makeText(addNoteActivity.this, "Share Us", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateNotes.this, " Note Shared", Toast.LENGTH_SHORT).show();
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "Hey! Here is My Notes App! Please try it! \nhttps://www.google.com/profile.php?id=pk.sami.notepad");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, etTitle.getText().toString()+"\n\n"+etContent.getText().toString());
                     shareIntent.setType("text/plain");
                     shareIntent = Intent.createChooser(shareIntent,"Share via : ");
                     startActivity(shareIntent);
